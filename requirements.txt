@@ -1,0 +1,8 @@
+# Dépendances pour Plateforme XP
+# Installation: pip install -r requirements.txt
+
+# Génération de QR Codes pour les badges étudiants
+qrcode==7.4.2
+
+# Traitement d'images (requis par qrcode)
+Pillow==10.1.0
