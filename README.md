@@ -58,7 +58,22 @@
 - ✅ Chargement automatique au démarrage
 - ✅ Données préservées entre sessions
 
-## 🚀 Installation
+## 🚀 Démarrage Rapide
+
+### Lancer l'application
+```bash
+python app_moderne.py
+```
+
+### Compte de démo
+```
+Email: demo@laplateforme.fr
+Mot de passe: demo123
+```
+
+---
+
+## 📦 Installation Complète
 
 ### Prérequis
 - Python 3.8 ou supérieur
@@ -79,7 +94,7 @@ pip install -r requirements.txt
 
 3. **Lancer l'application**
 ```bash
-python test.py
+python app_moderne.py
 ```
 
 ## 📦 Dépendances

@@ -45,16 +45,6 @@ class PlateformeXPApp(ctk.CTk):
         )
         subtitle.pack(pady=(0, 40))
         
-        self.login_name = ctk.CTkEntry(
-            login_frame,
-            placeholder_text="📝 Nom complet",
-            width=400,
-            height=50,
-            font=ctk.CTkFont(size=14),
-            corner_radius=10
-        )
-        self.login_name.pack(pady=10, padx=50)
-        
         self.login_email = ctk.CTkEntry(
             login_frame,
             placeholder_text="📧 Email",
@@ -64,6 +54,17 @@ class PlateformeXPApp(ctk.CTk):
             corner_radius=10
         )
         self.login_email.pack(pady=10, padx=50)
+        
+        self.login_password = ctk.CTkEntry(
+            login_frame,
+            placeholder_text="🔐 Mot de passe",
+            width=400,
+            height=50,
+            font=ctk.CTkFont(size=14),
+            corner_radius=10,
+            show="•"
+        )
+        self.login_password.pack(pady=10, padx=50)
         
         button_frame = ctk.CTkFrame(login_frame, fg_color="transparent")
         button_frame.pack(pady=30, padx=50)
@@ -83,9 +84,10 @@ class PlateformeXPApp(ctk.CTk):
     
     def login(self):
         email = self.login_email.get().strip()
+        password = self.login_password.get().strip()
         
-        if not email:
-            messagebox.showwarning("Attention", "Veuillez entrer votre email !")
+        if not email or not password:
+            messagebox.showwarning("Attention", "Veuillez entrer votre email et mot de passe !")
             return
         
         try:
@@ -96,10 +98,15 @@ class PlateformeXPApp(ctk.CTk):
             
             for user in data.get("users", []):
                 if isinstance(user, dict) and user.get("email") == email:
-                    self.current_user = user
-                    messagebox.showinfo("Succès", f"Bienvenue {user['nom']} !")
-                    self.create_main_app()
-                    return
+                    # Vérifier le mot de passe
+                    if user.get("password") == password:
+                        self.current_user = user
+                        messagebox.showinfo("Succès", f"Bienvenue {user['nom']} !")
+                        self.create_main_app()
+                        return
+                    else:
+                        messagebox.showerror("Erreur", "Mot de passe incorrect !")
+                        return
             
             messagebox.showerror("Erreur", "Aucun compte trouvé avec cet email !")
         except:
