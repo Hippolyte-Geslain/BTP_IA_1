@@ -65,11 +65,42 @@
 python app_moderne.py
 ```
 
-### Compte de démo
+### Comptes de démo
+
+#### 👑 Compte Admin (accès à l'administration)
 ```
 Email: demo@laplateforme.fr
 Mot de passe: demo123
+Rôle: Admin
 ```
+*Avec ce compte, vous pouvez créer/modifier/supprimer des utilisateurs*
+
+#### 👤 Compte Utilisateur Normal
+```
+Email: retregre
+Mot de passe: password123
+Rôle: Utilisateur
+```
+
+---
+
+## 🔑 Système d'authentification
+
+### Création de compte
+- Cliquez sur le bouton **"Créer un compte"** dans l'écran de connexion
+- Remplissez le formulaire (nom, email, mot de passe, promotion)
+- Les nouveaux comptes sont créés en tant qu'utilisateurs normaux
+
+### Rôles disponibles
+- **👤 Utilisateur (user):** Accès normal à l'application
+- **👑 Admin:** Accès au panneau d'administration
+
+### Panneau d'administration (Admin only)
+Les administrateurs peuvent:
+- ✅ Créer des utilisateurs manuellement
+- ✅ Modifier les rôles (Admin ↔ Utilisateur)
+- ✅ Supprimer des utilisateurs
+- ✅ Voir la liste complète des utilisateurs avec leurs statistiques
 
 ---
 

@@ -81,6 +81,30 @@ class PlateformeXPApp(ctk.CTk):
             hover_color=("#38a169", "#38a169")
         )
         login_btn.pack(side="left", padx=10)
+        
+        signup_btn = ctk.CTkButton(
+            button_frame,
+            text="✨ Créer un compte",
+            command=self.show_signup_screen,
+            width=180,
+            height=50,
+            font=ctk.CTkFont(size=16, weight="bold"),
+            corner_radius=10,
+            fg_color=("#2b6cb0", "#4a9eff"),
+            hover_color=("#1e4d7b", "#3a7ed8")
+        )
+        signup_btn.pack(side="left", padx=10)
+        
+        # Info texte
+        info_frame = ctk.CTkFrame(login_frame, fg_color="transparent")
+        info_frame.pack(pady=(20, 0), padx=50)
+        
+        ctk.CTkLabel(
+            info_frame,
+            text="Demo (Admin): demo@laplateforme.fr / demo123",
+            font=ctk.CTkFont(size=11),
+            text_color=("gray50", "gray70")
+        ).pack()
     
     def login(self):
         email = self.login_email.get().strip()
@@ -111,6 +135,152 @@ class PlateformeXPApp(ctk.CTk):
             messagebox.showerror("Erreur", "Aucun compte trouvé avec cet email !")
         except:
             messagebox.showerror("Erreur", "Aucun utilisateur enregistré !")
+    
+    def show_signup_screen(self):
+        for widget in self.winfo_children():
+            widget.destroy()
+        
+        main_frame = ctk.CTkFrame(self, fg_color="transparent")
+        main_frame.pack(expand=True, fill="both", padx=50, pady=50)
+        
+        signup_frame = ctk.CTkFrame(main_frame, corner_radius=20, fg_color=("#f0f0f0", "#1a1a1a"))
+        signup_frame.place(relx=0.5, rely=0.5, anchor="center")
+        
+        title = ctk.CTkLabel(
+            signup_frame,
+            text="✨ Créer un compte",
+            font=ctk.CTkFont(size=40, weight="bold"),
+            text_color=("#2b6cb0", "#4a9eff")
+        )
+        title.pack(pady=(40, 10))
+        
+        subtitle = ctk.CTkLabel(
+            signup_frame,
+            text="Rejoignez Plateforme XP",
+            font=ctk.CTkFont(size=14),
+            text_color=("gray50", "gray70")
+        )
+        subtitle.pack(pady=(0, 30))
+        
+        self.signup_name = ctk.CTkEntry(
+            signup_frame,
+            placeholder_text="👤 Nom complet",
+            width=400,
+            height=45,
+            font=ctk.CTkFont(size=13),
+            corner_radius=10
+        )
+        self.signup_name.pack(pady=8, padx=50)
+        
+        self.signup_email = ctk.CTkEntry(
+            signup_frame,
+            placeholder_text="📧 Email",
+            width=400,
+            height=45,
+            font=ctk.CTkFont(size=13),
+            corner_radius=10
+        )
+        self.signup_email.pack(pady=8, padx=50)
+        
+        self.signup_password = ctk.CTkEntry(
+            signup_frame,
+            placeholder_text="🔐 Mot de passe",
+            width=400,
+            height=45,
+            font=ctk.CTkFont(size=13),
+            corner_radius=10,
+            show="•"
+        )
+        self.signup_password.pack(pady=8, padx=50)
+        
+        self.signup_promo = ctk.CTkOptionMenu(
+            signup_frame,
+            values=["B1", "B2", "B3", "M1", "M2"],
+            width=400,
+            height=45,
+            font=ctk.CTkFont(size=13),
+            corner_radius=10
+        )
+        self.signup_promo.set("B2")
+        self.signup_promo.pack(pady=8, padx=50)
+        
+        button_frame = ctk.CTkFrame(signup_frame, fg_color="transparent")
+        button_frame.pack(pady=25, padx=50)
+        
+        create_btn = ctk.CTkButton(
+            button_frame,
+            text="✅ Créer le compte",
+            command=self.create_account,
+            width=170,
+            height=45,
+            font=ctk.CTkFont(size=14, weight="bold"),
+            corner_radius=10,
+            fg_color=("#48bb78", "#48bb78"),
+            hover_color=("#38a169", "#38a169")
+        )
+        create_btn.pack(side="left", padx=10)
+        
+        back_btn = ctk.CTkButton(
+            button_frame,
+            text="← Retour",
+            command=self.create_login_screen,
+            width=170,
+            height=45,
+            font=ctk.CTkFont(size=14, weight="bold"),
+            corner_radius=10,
+            fg_color=("#666666", "#555555"),
+            hover_color=("#555555", "#444444")
+        )
+        back_btn.pack(side="left", padx=10)
+    
+    def create_account(self):
+        name = self.signup_name.get().strip()
+        email = self.signup_email.get().strip()
+        password = self.signup_password.get().strip()
+        promo = self.signup_promo.get()
+        
+        if not name or not email or not password:
+            messagebox.showwarning("Attention", "Veuillez remplir tous les champs !")
+            return
+        
+        try:
+            with open("plateforme_data.json", "r", encoding="utf-8") as f:
+                data = json.load(f)
+                if not isinstance(data, dict) or "users" not in data:
+                    data = {"users": []}
+        except:
+            data = {"users": []}
+        
+        # Vérifier si l'email existe déjà
+        for user in data.get("users", []):
+            if isinstance(user, dict) and user.get("email") == email:
+                messagebox.showerror("Erreur", "Cet email est déjà utilisé !")
+                return
+        
+        # Créer le nouveau compte (utilisateur normal par défaut)
+        new_user = {
+            "nom": name,
+            "email": email,
+            "password": password,
+            "promo": promo,
+            "role": "user",
+            "xp": 0,
+            "niveau": 1,
+            "badges": [],
+            "projets": [],
+            "date_inscription": datetime.now().strftime("%Y-%m-%d")
+        }
+        
+        data["users"].append(new_user)
+        
+        try:
+            with open("plateforme_data.json", "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=4, ensure_ascii=False)
+            messagebox.showinfo("Succès", f"Compte créé avec succès !\n\nBienvenue {name} ! 🎉")
+            self.current_user = new_user
+            self.create_main_app()
+        except Exception as e:
+            messagebox.showerror("Erreur", f"Impossible de créer le compte : {e}")
     
     def create_main_app(self):
         for widget in self.winfo_children():
@@ -148,6 +318,10 @@ class PlateformeXPApp(ctk.CTk):
             ("🗺️ Bons plans", self.show_deals),
             ("💼 Coach carrière", self.show_career),
         ]
+        
+        # Ajouter le bouton d'admin si l'utilisateur est admin
+        if self.current_user.get("role") == "admin":
+            buttons.append(("⚙️ Administration", self.show_admin_panel))
         
         for text, command in buttons:
             btn = ctk.CTkButton(
@@ -1141,6 +1315,219 @@ class PlateformeXPApp(ctk.CTk):
         
         for label, value, color in progress_items:
             ctk.CTkLabel(stats_frame, text=f"{label}: {value}%", font=ctk.CTkFont(size=14)).pack(pady=10, padx=30, anchor="w")
+    
+    def show_admin_panel(self):
+        self.clear_content()
+        title = ctk.CTkLabel(self.content_frame, text="⚙️ Panneau d'Administration", font=ctk.CTkFont(size=36, weight="bold"))
+        title.pack(pady=(0, 30), anchor="w")
+        
+        # Bouton pour créer un nouvel utilisateur
+        create_user_btn = ctk.CTkButton(
+            self.content_frame,
+            text="➕ Créer un nouvel utilisateur",
+            command=self.show_create_user_dialog,
+            height=50,
+            fg_color="#4a9eff",
+            hover_color="#3182ce",
+            font=ctk.CTkFont(size=14, weight="bold")
+        )
+        create_user_btn.pack(pady=15, fill="x")
+        
+        # Liste des utilisateurs
+        ctk.CTkLabel(
+            self.content_frame,
+            text="📋 Utilisateurs enregistrés",
+            font=ctk.CTkFont(size=20, weight="bold")
+        ).pack(pady=(20, 10), anchor="w")
+        
+        scrollable = ctk.CTkScrollableFrame(self.content_frame, fg_color="transparent")
+        scrollable.pack(fill="both", expand=True, pady=10)
+        
+        try:
+            with open("plateforme_data.json", "r", encoding="utf-8") as f:
+                data = json.load(f)
+                users = data.get("users", [])
+        except:
+            users = []
+        
+        for user in users:
+            card = ctk.CTkFrame(scrollable, corner_radius=10, fg_color=("#f0f0f0", "#1a1a1a"))
+            card.pack(fill="x", pady=8, padx=5)
+            
+            info_frame = ctk.CTkFrame(card, fg_color="transparent")
+            info_frame.pack(fill="x", padx=15, pady=15)
+            
+            # Nom et email
+            ctk.CTkLabel(
+                info_frame,
+                text=f"👤 {user.get('nom', 'Unknown')}",
+                font=ctk.CTkFont(size=14, weight="bold")
+            ).pack(anchor="w")
+            
+            ctk.CTkLabel(
+                info_frame,
+                text=f"📧 {user.get('email', 'N/A')} | 🎓 {user.get('promo', 'N/A')}",
+                font=ctk.CTkFont(size=12),
+                text_color=("gray40", "gray70")
+            ).pack(anchor="w", pady=2)
+            
+            # Rôle et XP
+            role_text = "👑 Admin" if user.get("role") == "admin" else "👤 Utilisateur"
+            ctk.CTkLabel(
+                info_frame,
+                text=f"{role_text} | ⭐ XP: {user.get('xp', 0)} | 📈 Niveau: {user.get('niveau', 1)}",
+                font=ctk.CTkFont(size=11),
+                text_color=("gray50", "gray60")
+            ).pack(anchor="w", pady=2)
+            
+            # Boutons d'action
+            button_frame = ctk.CTkFrame(card, fg_color="transparent")
+            button_frame.pack(fill="x", padx=15, pady=(0, 10))
+            
+            # Changer le rôle
+            toggle_role = "Rendre Admin" if user.get("role") != "admin" else "Rendre User"
+            ctk.CTkButton(
+                button_frame,
+                text=f"🔄 {toggle_role}",
+                command=lambda u=user: self.toggle_user_role(u),
+                width=120,
+                height=35,
+                fg_color="#f6ad55",
+                hover_color="#e89b3c",
+                font=ctk.CTkFont(size=11)
+            ).pack(side="left", padx=5)
+            
+            # Supprimer l'utilisateur
+            if user.get("email") != self.current_user.get("email"):
+                ctk.CTkButton(
+                    button_frame,
+                    text="🗑️ Supprimer",
+                    command=lambda u=user: self.delete_user(u),
+                    width=120,
+                    height=35,
+                    fg_color="#e53e3e",
+                    hover_color="#c53030",
+                    font=ctk.CTkFont(size=11)
+                ).pack(side="left", padx=5)
+    
+    def show_create_user_dialog(self):
+        dialog = ctk.CTkToplevel(self)
+        dialog.title("Créer un utilisateur")
+        dialog.geometry("500x400")
+        dialog.grab_set()
+        
+        ctk.CTkLabel(dialog, text="➕ Créer un nouvel utilisateur", font=ctk.CTkFont(size=20, weight="bold")).pack(pady=20)
+        
+        name_entry = ctk.CTkEntry(dialog, placeholder_text="Nom complet", width=400, height=40)
+        name_entry.pack(pady=10)
+        
+        email_entry = ctk.CTkEntry(dialog, placeholder_text="Email", width=400, height=40)
+        email_entry.pack(pady=10)
+        
+        password_entry = ctk.CTkEntry(dialog, placeholder_text="Mot de passe", width=400, height=40, show="•")
+        password_entry.pack(pady=10)
+        
+        promo_menu = ctk.CTkOptionMenu(dialog, values=["B1", "B2", "B3", "M1", "M2"], width=400)
+        promo_menu.set("B2")
+        promo_menu.pack(pady=10)
+        
+        def save_new_user():
+            name = name_entry.get().strip()
+            email = email_entry.get().strip()
+            password = password_entry.get().strip()
+            promo = promo_menu.get()
+            
+            if not name or not email or not password:
+                messagebox.showwarning("Attention", "Tous les champs sont obligatoires !")
+                return
+            
+            try:
+                with open("plateforme_data.json", "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    if not isinstance(data, dict) or "users" not in data:
+                        data = {"users": []}
+            except:
+                data = {"users": []}
+            
+            # Vérifier si l'email existe
+            for user in data.get("users", []):
+                if user.get("email") == email:
+                    messagebox.showerror("Erreur", "Cet email existe déjà !")
+                    return
+            
+            # Créer le nouvel utilisateur
+            new_user = {
+                "nom": name,
+                "email": email,
+                "password": password,
+                "promo": promo,
+                "role": "user",
+                "xp": 0,
+                "niveau": 1,
+                "badges": [],
+                "projets": [],
+                "date_inscription": datetime.now().strftime("%Y-%m-%d")
+            }
+            
+            data["users"].append(new_user)
+            
+            try:
+                with open("plateforme_data.json", "w", encoding="utf-8") as f:
+                    json.dump(data, f, indent=4, ensure_ascii=False)
+                messagebox.showinfo("Succès", f"Utilisateur {name} créé avec succès !")
+                dialog.destroy()
+                self.show_admin_panel()
+            except Exception as e:
+                messagebox.showerror("Erreur", f"Impossible de créer l'utilisateur : {e}")
+        
+        ctk.CTkButton(
+            dialog,
+            text="✅ Créer",
+            command=save_new_user,
+            width=400,
+            height=50,
+            fg_color="#48bb78",
+            hover_color="#38a169",
+            font=ctk.CTkFont(size=14, weight="bold")
+        ).pack(pady=20)
+    
+    def toggle_user_role(self, user):
+        try:
+            with open("plateforme_data.json", "r", encoding="utf-8") as f:
+                data = json.load(f)
+        except:
+            data = {"users": []}
+        
+        for u in data.get("users", []):
+            if u.get("email") == user.get("email"):
+                u["role"] = "user" if u.get("role") == "admin" else "admin"
+                break
+        
+        try:
+            with open("plateforme_data.json", "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=4, ensure_ascii=False)
+            messagebox.showinfo("Succès", "Rôle modifié avec succès !")
+            self.show_admin_panel()
+        except Exception as e:
+            messagebox.showerror("Erreur", f"Impossible de modifier le rôle : {e}")
+    
+    def delete_user(self, user):
+        if messagebox.askyesno("Confirmation", f"Êtes-vous sûr de vouloir supprimer {user.get('nom', 'cet utilisateur')} ?"):
+            try:
+                with open("plateforme_data.json", "r", encoding="utf-8") as f:
+                    data = json.load(f)
+            except:
+                data = {"users": []}
+            
+            data["users"] = [u for u in data.get("users", []) if u.get("email") != user.get("email")]
+            
+            try:
+                with open("plateforme_data.json", "w", encoding="utf-8") as f:
+                    json.dump(data, f, indent=4, ensure_ascii=False)
+                messagebox.showinfo("Succès", "Utilisateur supprimé avec succès !")
+                self.show_admin_panel()
+            except Exception as e:
+                messagebox.showerror("Erreur", f"Impossible de supprimer l'utilisateur : {e}")
     
     def save_user_data(self):
         try:
