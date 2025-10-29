@@ -310,28 +310,6 @@ class PlateformeXPGUI:
         btn_frame = tk.Frame(center_frame, bg=self.colors['bg_medium'])
         btn_frame.pack(pady=20)
         
-        def creer_compte():
-            email = email_entry.get().strip()
-            nom = nom_entry.get().strip()
-            promo = promo_var.get()
-            
-            if not email or not nom:
-                messagebox.showerror("Erreur", "Veuillez remplir tous les champs")
-                return
-            
-            # Vérifier si l'utilisateur existe déjà
-            user = self.plateforme.obtenir_utilisateur(email)
-            if user:
-                messagebox.showwarning("Attention", f"Un compte existe déjà pour {email}")
-                return
-            
-            # Créer le nouveau compte
-            user = self.plateforme.creer_utilisateur(nom, email, promo)
-            if user:
-                messagebox.showinfo("✅ Compte créé", f"Bienvenue {nom} ! Votre aventure commence maintenant ! 🎮")
-                self.utilisateur_actuel = user
-                self.afficher_tableau_bord()
-        
         def se_connecter():
             email = email_entry.get().strip()
             nom = nom_entry.get().strip()
@@ -352,28 +330,12 @@ class PlateformeXPGUI:
                         break
             
             if not user:
-                messagebox.showerror("Erreur", f"Aucun compte trouvé. Créez un compte d'abord !")
+                messagebox.showerror("Erreur", f"Aucun compte trouvé !")
                 return
             
             messagebox.showinfo("✅ Connexion", f"Content de vous revoir {user.nom} ! 🎮")
             self.utilisateur_actuel = user
             self.afficher_tableau_bord()
-        
-        # Bouton Créer un compte
-        btn_creer = tk.Button(
-            btn_frame,
-            text="✨ Créer un compte",
-            font=("Helvetica", 14, "bold"),
-            bg=self.colors['accent'],
-            fg=self.colors['bg_dark'],
-            activebackground=self.colors['accent2'],
-            activeforeground=self.colors['text'],
-            relief='flat',
-            cursor='hand2',
-            width=20,
-            command=creer_compte
-        )
-        btn_creer.pack(pady=10, ipady=12)
         
         # Bouton Se connecter
         btn_connexion = tk.Button(

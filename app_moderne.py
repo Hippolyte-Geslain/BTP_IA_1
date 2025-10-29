@@ -65,31 +65,8 @@ class PlateformeXPApp(ctk.CTk):
         )
         self.login_email.pack(pady=10, padx=50)
         
-        self.login_promo = ctk.CTkEntry(
-            login_frame,
-            placeholder_text="🎓 Promotion (ex: B2)",
-            width=400,
-            height=50,
-            font=ctk.CTkFont(size=14),
-            corner_radius=10
-        )
-        self.login_promo.pack(pady=10, padx=50)
-        
         button_frame = ctk.CTkFrame(login_frame, fg_color="transparent")
         button_frame.pack(pady=30, padx=50)
-        
-        create_btn = ctk.CTkButton(
-            button_frame,
-            text="✨ Créer un compte",
-            command=self.create_account,
-            width=180,
-            height=50,
-            font=ctk.CTkFont(size=16, weight="bold"),
-            corner_radius=10,
-            fg_color=("#2b6cb0", "#4a9eff"),
-            hover_color=("#1e4d7b", "#3a7ed8")
-        )
-        create_btn.pack(side="left", padx=10)
         
         login_btn = ctk.CTkButton(
             button_frame,
@@ -103,57 +80,6 @@ class PlateformeXPApp(ctk.CTk):
             hover_color=("#38a169", "#38a169")
         )
         login_btn.pack(side="left", padx=10)
-    
-    def create_account(self):
-        name = self.login_name.get().strip()
-        email = self.login_email.get().strip()
-        promo = self.login_promo.get().strip()
-        
-        if not name or not email or not promo:
-            messagebox.showwarning("Attention", "Veuillez remplir tous les champs !")
-            return
-        
-        try:
-            with open("plateforme_data.json", "r", encoding="utf-8") as f:
-                content = f.read()
-                if content.strip():
-                    data = json.loads(content)
-                    if not isinstance(data, dict):
-                        data = {"users": []}
-                else:
-                    data = {"users": []}
-        except FileNotFoundError:
-            data = {"users": []}
-        except json.JSONDecodeError:
-            data = {"users": []}
-        
-        if "users" not in data or not isinstance(data["users"], list):
-            data["users"] = []
-        
-        for user in data["users"]:
-            if isinstance(user, dict) and user.get("email") == email:
-                messagebox.showerror("Erreur", "Cet email est déjà utilisé !")
-                return
-        
-        new_user = {
-            "nom": name,
-            "email": email,
-            "promo": promo,
-            "xp": 0,
-            "niveau": 1,
-            "badges": [],
-            "projets": [],
-            "date_inscription": datetime.now().strftime("%Y-%m-%d")
-        }
-        
-        data["users"].append(new_user)
-        
-        with open("plateforme_data.json", "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=4, ensure_ascii=False)
-        
-        messagebox.showinfo("Succès", f"Bienvenue {name} ! Votre compte a été créé.")
-        self.current_user = new_user
-        self.create_main_app()
     
     def login(self):
         email = self.login_email.get().strip()

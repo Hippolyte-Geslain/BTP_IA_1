@@ -1,10 +1,18 @@
 # 🎮 Plateforme XP - Application Étudiante Gamifiée
 
-> Prototype d'application pour les étudiants de La Plateforme_ combinant apprentissage, entraide et progression gamifiée.
+**Application Desktop 100% Fonctionnelle + Guide d'Évolution Complet**
+
+> Prototype complet pour les étudiants de La Plateforme_ combinant apprentissage, entraide et progression gamifiée.
+
+## 📊 STATUS ACTUEL
+
+**Version Desktop:** ✅ 100% Fonctionnel  
+**Version Web:** ❌ À développer (voir `EVOLUTIONS_REQUISES.md`)  
+**Version Mobile:** ❌ À développer (voir `EVOLUTIONS_REQUISES.md`)
 
 ## 📋 Description
 
-**Plateforme XP** est une application innovante qui transforme l'expérience étudiante en un jeu vidéo RPG. Les étudiants gagnent de l'XP en réalisant des projets, en aidant leurs pairs, et progressent à travers différents niveaux avec un système de badges et de récompenses.
+**Plateforme XP** est une application gamifiée qui transforme l'expérience étudiante en un jeu vidéo RPG. Les étudiants gagnent de l'XP en réalisant des projets, en aidant leurs pairs, et progressent à travers différents niveaux avec un système de badges et de récompenses.
 
 ## ✨ Fonctionnalités Implémentées (Prototype)
 
@@ -166,6 +174,47 @@ test.py
 - [ ] Guildes/Équipes
 - [ ] Achievements complexes
 - [ ] Skins/Avatars personnalisables
+
+## ⚠️ LIMITATIONS ACTUELLES (Important!)
+
+### ❌ Version Desktop Uniquement
+- Pas d'accès web/URL
+- Application locale sur un seul ordinateur
+- Pas d'accès distant
+
+### ❌ Pas de Vraie Base de Données
+- Données stockées en JSON (risque de perte)
+- Pas de scalabilité
+- Limite quelques utilisateurs locaux
+
+### ❌ Pas de Sécurité d'Authentification
+- Pas de mot de passe hashé
+- Pas de JWT/OAuth2
+- Pas de chiffrement
+
+### ❌ Pas de Real-Time
+- Pas de WebSockets
+- Pas de notifications push
+- Chat pas synchronisé entre clients
+
+### ❌ Pas de Mobile
+- Interface Desktop seulement
+- Pas de version React Native
+
+---
+
+## 📈 POUR PASSER EN PRODUCTION
+
+### Vous avez besoin de:
+1. **Backend Web:** Flask + PostgreSQL + JWT
+2. **Frontend Web:** React + TypeScript + Tailwind
+3. **Mobile:** React Native (optionnel)
+4. **DevOps:** Docker + GitHub Actions + Heroku/AWS
+5. **Real-Time:** WebSockets (Socket.io)
+
+**→ Voir le fichier `EVOLUTIONS_REQUISES.md` pour le guide complet!**
+
+---
 
 ## 🏗️ Structure de Données
 
