@@ -34,7 +34,6 @@ env/
 *~
 
 # Données de l'application
-plateforme_data.json
 badge_*.png
 
 # OS

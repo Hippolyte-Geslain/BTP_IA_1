@@ -1,0 +1,29 @@
+{
+    "users": [
+        {
+            "nom": "test",
+            "email": "test",
+            "password": "test123",
+            "promo": "B2",
+            "role": "admin",
+            "xp": 0,
+            "niveau": 1,
+            "badges": [],
+            "projets": [],
+            "date_inscription": "2025-10-29"
+        }
+        ,
+        {
+            "nom": "demo",
+            "email": "demo@laplateforme.fr",
+            "password": "demo123",
+            "promo": "B2",
+            "role": "admin",
+            "xp": 0,
+            "niveau": 1,
+            "badges": [],
+            "projets": [],
+            "date_inscription": "2025-10-29"
+        }
+    ]
+}
