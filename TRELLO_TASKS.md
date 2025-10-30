@@ -1,388 +1,388 @@
-# 📋 TRELLO TASK BREAKDOWN - PLATEFORME XP
+# 📋 DÉCOMPOSITION DES TÂCHES TRELLO - PLATEFORME XP
 
-## 🔴 CRITICAL (MVP - MUST HAVE)
+## 🔴 CRITIQUE (MVP - INDISPENSABLE)
 
-### Backend API (Flask + PostgreSQL)
-**Description:** Replace local JSON storage with a production-ready REST API backend. Create Flask application with RESTful endpoints for all features (users, projects, chat, badges). Implement proper HTTP methods (GET, POST, PUT, DELETE) and status codes. Set up PostgreSQL database connection with connection pooling for concurrent users.
+### API Backend (Flask + PostgreSQL)
+**Description :** Remplacer le stockage JSON local par une API REST backend prête pour la production. Créer une application Flask avec des points de terminaison RESTful pour toutes les fonctionnalités (utilisateurs, projets, chat, badges). Implémenter les méthodes HTTP appropriées (GET, POST, PUT, DELETE) et les codes de statut. Configurer la connexion à la base de données PostgreSQL avec un pool de connexions pour les utilisateurs simultanés.
 
-**Deliverables:**
-- Flask app with organized route blueprints
-- API endpoints: `/api/auth`, `/api/users`, `/api/projets`, `/api/chat`
-- PostgreSQL database with proper schemas
-- Working CRUD operations for all entities
-- Error handling and validation
+**Livrables :**
+- Application Flask avec des blueprints de routes organisés
+- Points de terminaison API : `/api/auth`, `/api/users`, `/api/projets`, `/api/chat`
+- Base de données PostgreSQL avec des schémas appropriés
+- Opérations CRUD fonctionnelles pour toutes les entités
+- Gestion des erreurs et validation
 
-**Success Criteria:** Can create user, login, complete project, send chat message via API calls (test with Postman)
-
----
-
-### Web Interface (React)
-**Description:** Convert the desktop tkinter application into a modern web interface using React. Recreate all existing screens (login, dashboard, projects, chat, leaderboard) as React components. Implement client-side routing with React Router. Connect to backend API using Axios for all data operations.
-
-**Deliverables:**
-- React app with component structure
-- Pages: Login, Dashboard, Projects, Chat, Leaderboard, Profile
-- API integration service layer
-- Responsive design (mobile-friendly)
-- State management (Context API or Redux)
-
-**Success Criteria:** User can access app via browser, perform all actions available in desktop version
+**Critères de succès :** Peut créer un utilisateur, se connecter, terminer un projet, envoyer un message de chat via des appels API (tester avec Postman)
 
 ---
 
-### JWT Authentication
-**Description:** Implement secure token-based authentication system. Hash passwords using bcrypt before storing in database. Generate JWT tokens on successful login containing user ID and role. Protect API endpoints requiring authentication with middleware that validates JWT tokens. Store tokens securely in localStorage on frontend.
+### Interface Web (React)
+**Description :** Convertir l'application de bureau tkinter en une interface web moderne utilisant React. Recréer tous les écrans existants (connexion, tableau de bord, projets, chat, classement) sous forme de composants React. Implémenter le routage côté client avec React Router. Se connecter à l'API backend en utilisant Axios pour toutes les opérations de données.
 
-**Deliverables:**
-- Password hashing on registration
-- JWT token generation on login
-- Token validation middleware
-- Protected API routes
-- Token refresh mechanism
-- Frontend token storage and auto-login
+**Livrables :**
+- Application React avec structure de composants
+- Pages : Connexion, Tableau de bord, Projets, Chat, Classement, Profil
+- Couche de service d'intégration API
+- Design réactif (compatible mobile)
+- Gestion d'état (Context API ou Redux)
 
-**Success Criteria:** Only authenticated users can access protected resources, tokens expire after set time, unauthorized requests return 401
-
----
-
-### Database Migration from JSON
-**Description:** Create migration script to transfer all existing data from `plateforme_data.json` to PostgreSQL database. Map JSON structure to relational database tables. Handle data type conversions and relationship mapping. Preserve all user progress, projects, messages, and events during migration.
-
-**Deliverables:**
-- Python migration script
-- Data validation checks
-- Rollback mechanism in case of errors
-- Migration logs
-- Documentation of mapping logic
-
-**Success Criteria:** All data from JSON file successfully transferred to database with zero data loss, relationships intact
+**Critères de succès :** L'utilisateur peut accéder à l'application via un navigateur, effectuer toutes les actions disponibles dans la version de bureau
 
 ---
 
-### Cloud Deployment
-**Description:** Deploy the complete application (backend + frontend + database) to cloud hosting. Set up production environment with proper configurations. Configure domain, SSL certificate, and environment variables. Ensure application is accessible via public URL with HTTPS.
+### Authentification JWT
+**Description :** Implémenter un système d'authentification sécurisé basé sur des jetons. Hacher les mots de passe en utilisant bcrypt avant de les stocker dans la base de données. Générer des jetons JWT lors d'une connexion réussie contenant l'ID utilisateur et le rôle. Protéger les points de terminaison API nécessitant une authentification avec un middleware qui valide les jetons JWT. Stocker les jetons de manière sécurisée dans localStorage côté frontend.
 
-**Deliverables:**
-- Backend deployed (Heroku/Railway/DigitalOcean)
-- Frontend deployed (Vercel/Netlify)
-- PostgreSQL database provisioned
-- Domain configured with SSL
-- Environment variables set
-- Health check endpoint working
+**Livrables :**
+- Hachage des mots de passe lors de l'inscription
+- Génération de jetons JWT lors de la connexion
+- Middleware de validation des jetons
+- Routes API protégées
+- Mécanisme de rafraîchissement des jetons
+- Stockage des jetons frontend et connexion automatique
 
-**Success Criteria:** Application accessible at public URL, all features work in production, HTTPS enabled
-
----
-
-## 🟡 MEDIUM PRIORITY (ENHANCE USER EXPERIENCE)
-
-### Real-time WebSockets for Chat
-**Description:** Replace polling-based chat with real-time WebSocket connection. Implement Socket.io on backend and frontend. When user sends message, broadcast instantly to all connected clients without page refresh. Show "User is typing..." indicators and online user count.
-
-**Deliverables:**
-- Socket.io server integration
-- WebSocket client in React
-- Real-time message broadcasting
-- Typing indicators
-- Online users list
-- Connection/disconnection handling
-
-**Success Criteria:** Messages appear instantly for all users, no refresh needed, typing indicators work
+**Critères de succès :** Seuls les utilisateurs authentifiés peuvent accéder aux ressources protégées, les jetons expirent après un délai défini, les requêtes non autorisées renvoient 401
 
 ---
 
-### Push Notifications
-**Description:** Implement browser push notifications for important events (new badge earned, project deadline approaching, someone replied to your chat message). Use Web Push API or Firebase Cloud Messaging. Allow users to enable/disable notifications in settings.
+### Migration de base de données depuis JSON
+**Description :** Créer un script de migration pour transférer toutes les données existantes de `plateforme_data.json` vers la base de données PostgreSQL. Mapper la structure JSON vers des tables de base de données relationnelles. Gérer les conversions de types de données et le mapping des relations. Préserver toutes les progressions des utilisateurs, projets, messages et événements pendant la migration.
 
-**Deliverables:**
-- Notification permission request flow
-- Backend notification service
-- Frontend notification handlers
-- Notification settings page
-- Support for: badge unlock, XP milestone, chat mentions, project reminders
+**Livrables :**
+- Script de migration Python
+- Vérifications de validation des données
+- Mécanisme de rollback en cas d'erreurs
+- Journaux de migration
+- Documentation de la logique de mapping
 
-**Success Criteria:** Users receive browser notifications for configured events even when tab is not active
-
----
-
-### User Profile Editing
-**Description:** Allow users to update their profile information. Create editable profile page with fields for name, email, promo, bio, avatar upload. Implement form validation and error handling. Show preview before saving. Add password change functionality with old password verification.
-
-**Deliverables:**
-- Profile edit page/modal
-- Form validation (email format, password strength)
-- Avatar image upload to cloud storage
-- Password change with confirmation
-- Success/error messages
-- Profile preview
-
-**Success Criteria:** User can update profile info, upload avatar, change password successfully
+**Critères de succès :** Toutes les données du fichier JSON transférées avec succès vers la base de données sans perte de données, relations intactes
 
 ---
 
-### Advanced Analytics Dashboard
-**Description:** Create comprehensive statistics page showing user progress over time. Display XP gain history with charts (line graph, bar chart). Show project completion rate, time spent on platform, most active days. Compare user stats to average or friends.
+### Déploiement Cloud
+**Description :** Déployer l'application complète (backend + frontend + base de données) sur un hébergement cloud. Configurer l'environnement de production avec les configurations appropriées. Configurer le domaine, le certificat SSL et les variables d'environnement. Assurer que l'application est accessible via une URL publique avec HTTPS.
 
-**Deliverables:**
-- Analytics page with charts (Chart.js or Recharts)
-- Metrics: XP over time, projects completed, badges earned, chat activity
-- Time filters (week, month, year)
-- Visual graphs and progress indicators
-- Export stats as PDF
+**Livrables :**
+- Backend déployé (Heroku/Railway/DigitalOcean)
+- Frontend déployé (Vercel/Netlify)
+- Base de données PostgreSQL provisionnée
+- Domaine configuré avec SSL
+- Variables d'environnement définies
+- Point de terminaison de health check fonctionnel
 
-**Success Criteria:** User can view detailed statistics of their activity with visual representations
-
----
-
-### Password Reset Functionality
-**Description:** Implement "Forgot Password" flow. When user clicks forgot password, send email with unique reset link. Link expires after 1 hour. User clicks link, enters new password twice, password updated in database. Send confirmation email after successful reset.
-
-**Deliverables:**
-- "Forgot Password" link on login page
-- Email service integration (SendGrid/Mailgun)
-- Password reset token generation
-- Reset link expiration logic
-- New password form with validation
-- Confirmation emails
-
-**Success Criteria:** User can reset password via email link, link expires properly, old password no longer works
+**Critères de succès :** Application accessible via URL publique, toutes les fonctionnalités marchent en production, HTTPS activé
 
 ---
 
-## 🔵 FUTURE ENHANCEMENTS (NICE TO HAVE)
+## 🟡 PRIORITÉ MOYENNE (AMÉLIORER L'EXPÉRIENCE UTILISATEUR)
 
-### Mobile App (React Native)
-**Description:** Create native mobile applications for iOS and Android using React Native. Reuse existing API and business logic. Implement mobile-specific UI with native components. Add features like biometric login (fingerprint/face ID), offline mode with sync, and camera for QR code scanning.
+### WebSockets en Temps Réel pour le Chat
+**Description :** Remplacer le chat basé sur le polling par une connexion WebSocket en temps réel. Implémenter Socket.io sur le backend et le frontend. Lorsqu'un utilisateur envoie un message, diffuser instantanément à tous les clients connectés sans rafraîchissement de page. Afficher les indicateurs "L'utilisateur est en train d'écrire..." et le nombre d'utilisateurs en ligne.
 
-**Deliverables:**
-- React Native app project
-- iOS and Android builds
-- Mobile-optimized UI/UX
-- Biometric authentication
-- Offline mode with local storage
-- Push notifications (mobile)
-- QR code scanner for events
+**Livrables :**
+- Intégration du serveur Socket.io
+- Client WebSocket dans React
+- Diffusion de messages en temps réel
+- Indicateurs de saisie
+- Liste des utilisateurs en ligne
+- Gestion de la connexion/déconnexion
 
-**Success Criteria:** Apps available on App Store and Google Play, feature parity with web version
-
----
-
-### Tutoring Session Booking
-**Description:** Create system for students to book 1-on-1 or group tutoring sessions. Users can mark themselves as available tutors for specific subjects. Students browse available tutors by skill/rating, select time slot, and book session. Calendar integration with Google Calendar. Automatic reminders before session.
-
-**Deliverables:**
-- Tutor profile setup (skills, availability)
-- Session booking interface with calendar
-- Time slot management
-- Email/SMS reminders
-- Session history and ratings
-- Google Calendar integration
-
-**Success Criteria:** Students can find and book tutors, receive reminders, rate sessions afterward
+**Critères de succès :** Les messages apparaissent instantanément pour tous les utilisateurs, pas de rafraîchissement nécessaire, les indicateurs de saisie fonctionnent
 
 ---
 
-### Tournament Creation/Management
-**Description:** Allow admins to create coding tournaments/competitions. Define tournament format (solo/team), start/end dates, problems/challenges. Students register for tournaments, submit solutions. Leaderboard updates in real-time during tournament. Award special badges and XP to winners.
+### Notifications Push
+**Description :** Implémenter des notifications push de navigateur pour les événements importants (nouveau badge gagné, date limite de projet approchant, quelqu'un a répondu à votre message de chat). Utiliser Web Push API ou Firebase Cloud Messaging. Permettre aux utilisateurs d'activer/désactiver les notifications dans les paramètres.
 
-**Deliverables:**
-- Tournament creation admin panel
-- Tournament listing page
-- Registration system
-- Submission interface
-- Live leaderboard
-- Automated winner calculation
-- Tournament badges
+**Livrables :**
+- Flux de demande de permission de notification
+- Service de notification backend
+- Gestionnaires de notification frontend
+- Page de paramètres de notification
+- Support pour : déverrouillage de badge, jalon XP, mentions de chat, rappels de projet
 
-**Success Criteria:** Admin can create tournament, students can register and compete, winners receive rewards automatically
+**Critères de succès :** Les utilisateurs reçoivent des notifications de navigateur pour les événements configurés même lorsque l'onglet n'est pas actif
 
 ---
 
-### AI Career Coach
-**Description:** Integrate AI chatbot that provides personalized career advice. Analyzes user's completed projects, skills, and XP level to suggest career paths. Recommends relevant projects, courses, or skills to learn. Answers questions about tech careers using LLM (OpenAI GPT or open-source alternative).
+### Édition du Profil Utilisateur
+**Description :** Permettre aux utilisateurs de mettre à jour leurs informations de profil. Créer une page de profil éditable avec des champs pour le nom, l'email, la promo, la bio, le téléchargement d'avatar. Implémenter la validation de formulaire et la gestion des erreurs. Afficher un aperçu avant d'enregistrer. Ajouter une fonctionnalité de changement de mot de passe avec vérification de l'ancien mot de passe.
 
-**Deliverables:**
-- AI chatbot interface
-- Integration with OpenAI API or local LLM
-- Context awareness (user profile, project history)
-- Career path recommendations
-- Skill gap analysis
-- Chat history persistence
+**Livrables :**
+- Page/modal d'édition de profil
+- Validation de formulaire (format email, force du mot de passe)
+- Téléchargement d'image d'avatar vers le stockage cloud
+- Changement de mot de passe avec confirmation
+- Messages de succès/erreur
+- Aperçu du profil
 
-**Success Criteria:** Users can chat with AI coach, receive relevant career advice based on their profile
-
----
-
-### Skills Companion (CV Analysis)
-**Description:** Tool that helps students build and optimize their resume/CV. User uploads CV (PDF/Word), system extracts skills using NLP. Compares extracted skills against job market trends. Suggests missing skills to learn. Generates optimized CV highlighting completed projects from platform.
-
-**Deliverables:**
-- CV upload interface
-- PDF/Word parsing
-- Skill extraction using NLP
-- Job market trend analysis
-- Gap analysis and recommendations
-- CV generator with platform projects
-- Export as formatted PDF
-
-**Success Criteria:** User uploads CV, receives skill analysis, gets recommendations, downloads improved CV
+**Critères de succès :** L'utilisateur peut mettre à jour les informations du profil, télécharger un avatar, changer le mot de passe avec succès
 
 ---
 
-### Resource Sharing Library
-**Description:** Collaborative library where students can share and access learning resources (articles, videos, code snippets, cheat sheets). Organize resources by topic/technology. Users can upvote helpful resources. Add commenting and tagging system. Admins can feature high-quality resources.
+### Tableau de Bord Analytique Avancé
+**Description :** Créer une page de statistiques complète montrant la progression de l'utilisateur au fil du temps. Afficher l'historique des gains XP avec des graphiques (graphique linéaire, graphique en barres). Montrer le taux de complétion des projets, le temps passé sur la plateforme, les jours les plus actifs. Comparer les statistiques de l'utilisateur à la moyenne ou aux amis.
 
-**Deliverables:**
-- Resource upload form (URL, file, or text)
-- Category/tag system
-- Search and filter interface
-- Upvote/downvote system
-- Comments on resources
-- Admin moderation tools
-- Featured resources section
+**Livrables :**
+- Page d'analyse avec graphiques (Chart.js ou Recharts)
+- Métriques : XP au fil du temps, projets complétés, badges gagnés, activité de chat
+- Filtres temporels (semaine, mois, année)
+- Graphiques visuels et indicateurs de progression
+- Export des statistiques en PDF
 
-**Success Criteria:** Users can upload/browse resources, search by tag, upvote helpful content
+**Critères de succès :** L'utilisateur peut voir des statistiques détaillées de son activité avec des représentations visuelles
 
 ---
 
-### Friends/Guilds System
-**Description:** Add social features allowing students to connect. Send/accept friend requests. See friends' activity feed (projects completed, badges earned). Create or join guilds (teams) with up to 20 members. Guild leaderboard showing combined XP. Guild chat channel. Collaborative guild challenges.
+### Fonctionnalité de Réinitialisation de Mot de Passe
+**Description :** Implémenter le flux "Mot de passe oublié". Lorsque l'utilisateur clique sur mot de passe oublié, envoyer un email avec un lien de réinitialisation unique. Le lien expire après 1 heure. L'utilisateur clique sur le lien, entre un nouveau mot de passe deux fois, le mot de passe est mis à jour dans la base de données. Envoyer un email de confirmation après une réinitialisation réussie.
 
-**Deliverables:**
-- Friend request system
-- Friends list and activity feed
-- Guild creation and management
-- Guild member roles (admin, member)
-- Guild leaderboard
-- Guild-exclusive chat
-- Guild challenges
+**Livrables :**
+- Lien "Mot de passe oublié" sur la page de connexion
+- Intégration de service d'email (SendGrid/Mailgun)
+- Génération de jeton de réinitialisation de mot de passe
+- Logique d'expiration du lien de réinitialisation
+- Formulaire de nouveau mot de passe avec validation
+- Emails de confirmation
 
-**Success Criteria:** Users can add friends, create/join guilds, participate in guild activities
+**Critères de succès :** L'utilisateur peut réinitialiser le mot de passe via le lien email, le lien expire correctement, l'ancien mot de passe ne fonctionne plus
 
 ---
 
-### Customizable Avatars
-**Description:** Let users personalize their profile with customizable avatars. Offer base avatar creator with options for face, hair, clothes, accessories. Unlock premium items by reaching levels or earning badges. Integrate avatar into profile, leaderboard, and chat.
+## 🔵 AMÉLIORATIONS FUTURES (AGRÉABLE À AVOIR)
 
-**Deliverables:**
-- Avatar builder interface
-- Asset library (faces, hair, clothes, accessories)
-- Unlockable items system
-- Avatar preview in real-time
-- Save/load avatar configuration
-- Display avatar across platform
+### Application Mobile (React Native)
+**Description :** Créer des applications mobiles natives pour iOS et Android en utilisant React Native. Réutiliser l'API existante et la logique métier. Implémenter une UI spécifique mobile avec des composants natifs. Ajouter des fonctionnalités comme la connexion biométrique (empreinte digitale/Face ID), le mode hors ligne avec synchronisation, et la caméra pour scanner les codes QR.
 
-**Success Criteria:** Users can create unique avatar, unlock items by progressing, see avatar in profile/chat
+**Livrables :**
+- Projet d'application React Native
+- Builds iOS et Android
+- UI/UX optimisée pour mobile
+- Authentification biométrique
+- Mode hors ligne avec stockage local
+- Notifications push (mobile)
+- Scanner de code QR pour les événements
+
+**Critères de succès :** Applications disponibles sur App Store et Google Play, parité de fonctionnalités avec la version web
+
+---
+
+### Réservation de Sessions de Tutorat
+**Description :** Créer un système permettant aux étudiants de réserver des sessions de tutorat individuelles ou en groupe. Les utilisateurs peuvent se marquer comme tuteurs disponibles pour des matières spécifiques. Les étudiants parcourent les tuteurs disponibles par compétence/évaluation, sélectionnent un créneau horaire et réservent une session. Intégration du calendrier avec Google Calendar. Rappels automatiques avant la session.
+
+**Livrables :**
+- Configuration du profil de tuteur (compétences, disponibilité)
+- Interface de réservation de session avec calendrier
+- Gestion des créneaux horaires
+- Rappels par email/SMS
+- Historique des sessions et évaluations
+- Intégration Google Calendar
+
+**Critères de succès :** Les étudiants peuvent trouver et réserver des tuteurs, recevoir des rappels, évaluer les sessions après
+
+---
+
+### Création/Gestion de Tournois
+**Description :** Permettre aux administrateurs de créer des tournois/compétitions de codage. Définir le format du tournoi (solo/équipe), dates de début/fin, problèmes/défis. Les étudiants s'inscrivent aux tournois, soumettent des solutions. Le classement se met à jour en temps réel pendant le tournoi. Attribuer des badges spéciaux et des XP aux gagnants.
+
+**Livrables :**
+- Panneau d'administration de création de tournoi
+- Page de liste de tournois
+- Système d'inscription
+- Interface de soumission
+- Classement en direct
+- Calcul automatique des gagnants
+- Badges de tournoi
+
+**Critères de succès :** L'administrateur peut créer un tournoi, les étudiants peuvent s'inscrire et concourir, les gagnants reçoivent automatiquement des récompenses
+
+---
+
+### Coach de Carrière IA
+**Description :** Intégrer un chatbot IA qui fournit des conseils de carrière personnalisés. Analyse les projets complétés de l'utilisateur, les compétences et le niveau XP pour suggérer des parcours professionnels. Recommande des projets, cours ou compétences pertinents à apprendre. Répond aux questions sur les carrières technologiques en utilisant un LLM (OpenAI GPT ou alternative open-source).
+
+**Livrables :**
+- Interface de chatbot IA
+- Intégration avec l'API OpenAI ou LLM local
+- Conscience du contexte (profil utilisateur, historique des projets)
+- Recommandations de parcours professionnels
+- Analyse des lacunes de compétences
+- Persistance de l'historique des discussions
+
+**Critères de succès :** Les utilisateurs peuvent discuter avec le coach IA, recevoir des conseils de carrière pertinents basés sur leur profil
+
+---
+
+### Compagnon de Compétences (Analyse de CV)
+**Description :** Outil qui aide les étudiants à construire et optimiser leur CV. L'utilisateur télécharge son CV (PDF/Word), le système extrait les compétences en utilisant le NLP. Compare les compétences extraites aux tendances du marché de l'emploi. Suggère les compétences manquantes à apprendre. Génère un CV optimisé mettant en évidence les projets complétés sur la plateforme.
+
+**Livrables :**
+- Interface de téléchargement de CV
+- Analyse PDF/Word
+- Extraction de compétences utilisant le NLP
+- Analyse des tendances du marché de l'emploi
+- Analyse des lacunes et recommandations
+- Générateur de CV avec les projets de la plateforme
+- Export en PDF formaté
+
+**Critères de succès :** L'utilisateur télécharge un CV, reçoit une analyse de compétences, obtient des recommandations, télécharge un CV amélioré
+
+---
+
+### Bibliothèque de Partage de Ressources
+**Description :** Bibliothèque collaborative où les étudiants peuvent partager et accéder aux ressources d'apprentissage (articles, vidéos, extraits de code, aide-mémoire). Organiser les ressources par sujet/technologie. Les utilisateurs peuvent voter positivement pour les ressources utiles. Ajouter un système de commentaires et de tags. Les administrateurs peuvent mettre en avant les ressources de haute qualité.
+
+**Livrables :**
+- Formulaire de téléchargement de ressources (URL, fichier ou texte)
+- Système de catégories/tags
+- Interface de recherche et filtrage
+- Système de vote positif/négatif
+- Commentaires sur les ressources
+- Outils de modération administrateur
+- Section de ressources en vedette
+
+**Critères de succès :** Les utilisateurs peuvent télécharger/parcourir des ressources, rechercher par tag, voter positivement pour le contenu utile
+
+---
+
+### Système d'Amis/Guildes
+**Description :** Ajouter des fonctionnalités sociales permettant aux étudiants de se connecter. Envoyer/accepter des demandes d'amis. Voir le fil d'activité des amis (projets complétés, badges gagnés). Créer ou rejoindre des guildes (équipes) jusqu'à 20 membres. Classement de guilde montrant l'XP combiné. Canal de chat de guilde. Défis collaboratifs de guilde.
+
+**Livrables :**
+- Système de demande d'ami
+- Liste d'amis et fil d'activité
+- Création et gestion de guilde
+- Rôles des membres de guilde (admin, membre)
+- Classement de guilde
+- Chat exclusif de guilde
+- Défis de guilde
+
+**Critères de succès :** Les utilisateurs peuvent ajouter des amis, créer/rejoindre des guildes, participer aux activités de guilde
+
+---
+
+### Avatars Personnalisables
+**Description :** Laisser les utilisateurs personnaliser leur profil avec des avatars personnalisables. Offrir un créateur d'avatar de base avec des options pour le visage, les cheveux, les vêtements, les accessoires. Débloquer des articles premium en atteignant des niveaux ou en gagnant des badges. Intégrer l'avatar dans le profil, le classement et le chat.
+
+**Livrables :**
+- Interface de création d'avatar
+- Bibliothèque d'assets (visages, cheveux, vêtements, accessoires)
+- Système d'articles débloquables
+- Aperçu d'avatar en temps réel
+- Sauvegarder/charger la configuration de l'avatar
+- Afficher l'avatar sur toute la plateforme
+
+**Critères de succès :** Les utilisateurs peuvent créer un avatar unique, débloquer des articles en progressant, voir l'avatar dans le profil/chat
 
 ---
 
 ## 📊 DEVOPS & PRODUCTION (INFRASTRUCTURE)
 
-### Docker Containerization
-**Description:** Create Docker containers for all application components. Write Dockerfiles for backend (Python), frontend (Node), and database (PostgreSQL). Create docker-compose.yml to orchestrate all services. Ensure containers can communicate via internal network. Optimize images for production (multi-stage builds).
+### Conteneurisation Docker
+**Description :** Créer des conteneurs Docker pour tous les composants de l'application. Écrire des Dockerfiles pour le backend (Python), le frontend (Node) et la base de données (PostgreSQL). Créer docker-compose.yml pour orchestrer tous les services. Assurer que les conteneurs peuvent communiquer via le réseau interne. Optimiser les images pour la production (builds multi-étapes).
 
-**Deliverables:**
-- Dockerfile for backend
-- Dockerfile for frontend  
+**Livrables :**
+- Dockerfile pour le backend
+- Dockerfile pour le frontend
 - docker-compose.yml
-- .dockerignore files
-- Container networking setup
-- Volume management for persistent data
-- Documentation for running with Docker
+- Fichiers .dockerignore
+- Configuration du réseau de conteneurs
+- Gestion des volumes pour les données persistantes
+- Documentation pour l'exécution avec Docker
 
-**Success Criteria:** Entire app runs with single `docker-compose up` command, containers communicate correctly
-
----
-
-### CI/CD Pipeline
-**Description:** Set up automated testing and deployment pipeline using GitHub Actions. On every push to main branch, automatically run tests (backend and frontend), build Docker images, and deploy to production if tests pass. Set up staging environment for testing before production.
-
-**Deliverables:**
-- GitHub Actions workflow files
-- Automated testing stage
-- Automated build stage
-- Automated deployment stage
-- Staging and production environments
-- Rollback mechanism
-- Deployment notifications
-
-**Success Criteria:** Code pushed to main automatically deploys to production after passing all tests
+**Critères de succès :** L'application entière fonctionne avec une seule commande `docker-compose up`, les conteneurs communiquent correctement
 
 ---
 
-### Automated Testing (pytest + Jest)
-**Description:** Write comprehensive test suites for backend and frontend. Backend: test all API endpoints, database operations, authentication logic using pytest. Frontend: test components, user interactions, API calls using Jest and React Testing Library. Aim for 80%+ code coverage.
+### Pipeline CI/CD
+**Description :** Configurer un pipeline de test et de déploiement automatisé en utilisant GitHub Actions. À chaque push sur la branche main, exécuter automatiquement les tests (backend et frontend), construire les images Docker et déployer en production si les tests réussissent. Configurer un environnement de staging pour les tests avant la production.
 
-**Deliverables:**
-- Backend tests with pytest
-- Frontend tests with Jest
-- Test coverage reports
-- Integration tests
-- End-to-end tests (optional: Cypress)
-- Test documentation
+**Livrables :**
+- Fichiers de workflow GitHub Actions
+- Étape de test automatisé
+- Étape de build automatisé
+- Étape de déploiement automatisé
+- Environnements de staging et production
+- Mécanisme de rollback
+- Notifications de déploiement
 
-**Success Criteria:** All tests pass, coverage above 80%, tests run automatically in CI/CD
-
----
-
-### Monitoring/Logging (Sentry)
-**Description:** Implement error tracking and performance monitoring. Integrate Sentry for real-time error reporting with stack traces. Set up logging for API requests, database queries, and user actions. Create dashboards to monitor app health, error rates, and response times.
-
-**Deliverables:**
-- Sentry integration (backend + frontend)
-- Structured logging system
-- Log aggregation (CloudWatch/Logtail)
-- Performance monitoring
-- Error alerting (email/Slack)
-- Monitoring dashboard
-
-**Success Criteria:** All errors automatically logged to Sentry, team notified of critical errors
+**Critères de succès :** Le code poussé sur main se déploie automatiquement en production après avoir passé tous les tests
 
 ---
 
-### Redis Caching
-**Description:** Implement caching layer to improve performance. Cache frequently accessed data like leaderboard, user profiles, project lists. Set appropriate TTL (time to live) for each cache. Invalidate cache when data changes. Reduce database load by 50%+.
+### Tests Automatisés (pytest + Jest)
+**Description :** Écrire des suites de tests complètes pour le backend et le frontend. Backend : tester tous les points de terminaison API, opérations de base de données, logique d'authentification en utilisant pytest. Frontend : tester les composants, interactions utilisateur, appels API en utilisant Jest et React Testing Library. Viser une couverture de code de 80%+.
 
-**Deliverables:**
-- Redis server setup
-- Caching middleware
-- Cache invalidation logic
-- Cache for: leaderboard, user profiles, projects
-- Cache hit/miss monitoring
-- Cache performance metrics
+**Livrables :**
+- Tests backend avec pytest
+- Tests frontend avec Jest
+- Rapports de couverture de tests
+- Tests d'intégration
+- Tests de bout en bout (optionnel : Cypress)
+- Documentation des tests
 
-**Success Criteria:** API response times reduced by 50%+, database load decreased
+**Critères de succès :** Tous les tests réussissent, couverture supérieure à 80%, les tests s'exécutent automatiquement dans le CI/CD
+
+---
+
+### Surveillance/Journalisation (Sentry)
+**Description :** Implémenter le suivi des erreurs et la surveillance des performances. Intégrer Sentry pour le signalement d'erreurs en temps réel avec traces de pile. Configurer la journalisation pour les requêtes API, les requêtes de base de données et les actions utilisateur. Créer des tableaux de bord pour surveiller la santé de l'application, les taux d'erreur et les temps de réponse.
+
+**Livrables :**
+- Intégration Sentry (backend + frontend)
+- Système de journalisation structuré
+- Agrégation de logs (CloudWatch/Logtail)
+- Surveillance des performances
+- Alertes d'erreur (email/Slack)
+- Tableau de bord de surveillance
+
+**Critères de succès :** Toutes les erreurs automatiquement enregistrées dans Sentry, l'équipe notifiée des erreurs critiques
+
+---
+
+### Mise en Cache Redis
+**Description :** Implémenter une couche de cache pour améliorer les performances. Mettre en cache les données fréquemment consultées comme le classement, les profils utilisateur, les listes de projets. Définir un TTL (time to live) approprié pour chaque cache. Invalider le cache lorsque les données changent. Réduire la charge de la base de données de 50%+.
+
+**Livrables :**
+- Configuration du serveur Redis
+- Middleware de mise en cache
+- Logique d'invalidation du cache
+- Cache pour : classement, profils utilisateur, projets
+- Surveillance des hits/miss de cache
+- Métriques de performance du cache
+
+**Critères de succès :** Temps de réponse de l'API réduits de 50%+, charge de la base de données diminuée
 
 ---
 
 ### HTTPS/SSL
-**Description:** Secure application with HTTPS encryption. Obtain SSL certificate (Let's Encrypt free or commercial). Configure web server (Nginx) to redirect HTTP to HTTPS. Set up automatic certificate renewal. Configure security headers (HSTS, CSP).
+**Description :** Sécuriser l'application avec le chiffrement HTTPS. Obtenir un certificat SSL (Let's Encrypt gratuit ou commercial). Configurer le serveur web (Nginx) pour rediriger HTTP vers HTTPS. Configurer le renouvellement automatique du certificat. Configurer les en-têtes de sécurité (HSTS, CSP).
 
-**Deliverables:**
-- SSL certificate setup
-- HTTPS redirect configuration
-- Security headers
-- Auto-renewal script
-- Mixed content fix (all assets via HTTPS)
+**Livrables :**
+- Configuration du certificat SSL
+- Configuration de redirection HTTPS
+- En-têtes de sécurité
+- Script de renouvellement automatique
+- Correction du contenu mixte (tous les assets via HTTPS)
 
-**Success Criteria:** All traffic encrypted, browser shows secure lock icon, SSL Labs A+ rating
-
----
-
-### API Documentation (Swagger)
-**Description:** Generate interactive API documentation using Swagger/OpenAPI. Document all endpoints with request/response examples, parameters, authentication requirements. Make documentation accessible at `/api/docs`. Keep documentation in sync with code changes.
-
-**Deliverables:**
-- Swagger/OpenAPI integration
-- Documentation for all endpoints
-- Request/response schemas
-- Authentication documentation
-- Interactive API testing interface
-- Auto-generated from code annotations
-
-**Success Criteria:** Complete API documentation accessible at `/api/docs`, developers can test endpoints directly
+**Critères de succès :** Tout le trafic chiffré, le navigateur affiche l'icône de cadenas sécurisé, note A+ SSL Labs
 
 ---
 
-**Last Updated:** 2025-10-29  
-**Total Tasks:** 27 (5 Critical, 5 Medium, 7 Future, 7 DevOps)
+### Documentation API (Swagger)
+**Description :** Générer une documentation API interactive en utilisant Swagger/OpenAPI. Documenter tous les points de terminaison avec des exemples de requête/réponse, paramètres, exigences d'authentification. Rendre la documentation accessible à `/api/docs`. Maintenir la documentation synchronisée avec les changements de code.
+
+**Livrables :**
+- Intégration Swagger/OpenAPI
+- Documentation pour tous les points de terminaison
+- Schémas de requête/réponse
+- Documentation d'authentification
+- Interface de test API interactive
+- Auto-générée à partir des annotations de code
+
+**Critères de succès :** Documentation API complète accessible à `/api/docs`, les développeurs peuvent tester les points de terminaison directement
+
+---
+
+**Dernière mise à jour :** 2025-10-29  
+**Total des tâches :** 27 (5 Critiques, 5 Moyennes, 7 Futures, 7 DevOps)
