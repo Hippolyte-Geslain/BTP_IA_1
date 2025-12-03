@@ -35,6 +35,7 @@ call venv\Scripts\activate.bat
 
 REM Installer les dépendances
 echo Installation des dépendances Python...
+pip install --only-binary :all: psycopg2 -q 2>nul
 pip install -r requirements.txt
 
 REM Démarrer le serveur Flask
@@ -46,6 +47,6 @@ echo.
 echo Appuyez sur Ctrl+C pour arrêter le serveur.
 echo.
 
-python app.py
+python run.py
 
 pause

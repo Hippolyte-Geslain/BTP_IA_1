@@ -17,7 +17,7 @@ import {
   Folder as ProjectIcon,
   Chat as ChatIcon,
   Leaderboard as LeaderboardIcon,
-  Event as CalendarIcon,
+  CalendarToday as CalendarIcon,
   EmojiEvents as BadgesIcon,
   Person as ProfileIcon,
   Menu as MenuIcon,

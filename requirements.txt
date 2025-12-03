@@ -1,8 +1,23 @@
 # Dépendances pour Plateforme XP
 # Installation: pip install -r requirements.txt
 
-# Génération de QR Codes pour les badges étudiants
-qrcode==7.4.2
+# Flask Framework
+Flask>=3.0.0
+Flask-SQLAlchemy>=3.1.1
+Flask-JWT-Extended>=4.5.2
+Flask-CORS>=4.0.0
+Flask-Bcrypt>=1.0.1
+Flask-Mail>=0.9.1
+Flask-Caching>=2.0.2
 
-# Traitement d'images (requis par qrcode)
-Pillow==10.1.0
+# Database
+SQLAlchemy>=2.0.23
+
+# QR Code generation
+qrcode>=7.4.2
+
+# Image processing
+Pillow>=10.1.0
+
+# Utilities
+python-dotenv>=1.0.0
