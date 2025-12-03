@@ -17,6 +17,12 @@ import {
 import {
   Add as AddIcon,
   Folder as ProjectIcon,
+  Home as HomeIcon,
+  EmojiEvents as BadgeIcon,
+  Chat as ChatIcon,
+  CalendarMonth as CalendarIcon,
+  LeaderboardOutlined as LeaderboardIcon,
+  Person as PersonIcon,
 } from '@mui/icons-material';
 
 function Dashboard() {
@@ -62,9 +68,7 @@ function Dashboard() {
   };
 
   const getXpProgress = (xp) => {
-    return (
-    <>
-      <Navigation />xp % 100);
+    return (xp % 100);
   };
 
   const menuItems = [

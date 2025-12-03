@@ -60,9 +60,7 @@ function Profile() {
   };
 
   const getXpProgress = (xp) => {
-    return (
-    <>
-      <Navigation />xp % 100);
+    return (xp % 100);
   };
 
   const getXpForNextLevel = (xp) => {

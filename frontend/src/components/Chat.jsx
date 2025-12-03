@@ -24,10 +24,8 @@ function Chat() {
 
   useEffect(() => {
     loadMessages();
-    const interval = setInterval(loadMessages, 5000); // Refresh every 5 seconds
-    return (
-    <>
-      <Navigation />) => clearInterval(interval);
+    const interval = setInterval(loadMessages, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {

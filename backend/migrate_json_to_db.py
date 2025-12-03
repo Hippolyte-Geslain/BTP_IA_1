@@ -38,11 +38,8 @@ def migrate_data():
                 continue
             
             # Create new user
-            # Check if password is already hashed (starts with $2b$)
-            if user_data['password'].startswith('$2b$') or user_data['password'].startswith('$2a$'):
-                password = user_data['password']
-            else:
-                password = bcrypt.generate_password_hash(user_data['password']).decode('utf-8')
+            # Always hash the password (assume passwords in JSON are plaintext)
+            password = bcrypt.generate_password_hash(user_data['password']).decode('utf-8')
             
             user = User(
                 nom=user_data['nom'],
